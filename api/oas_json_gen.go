@@ -64470,7 +64470,7 @@ func (s *Stat) encodeFields(e *jx.Encoder) {
 	}
 	{
 		e.FieldStart("uptime")
-		e.Int(s.Uptime)
+		e.Float64(s.Uptime)
 	}
 	{
 		e.FieldStart("loadAvg")
@@ -64530,8 +64530,8 @@ func (s *Stat) Decode(d *jx.Decoder) error {
 		case "uptime":
 			requiredBitSet[0] |= 1 << 2
 			if err := func() error {
-				v, err := d.Int()
-				s.Uptime = int(v)
+				v, err := d.Float64()
+				s.Uptime = float64(v)
 				if err != nil {
 					return err
 				}

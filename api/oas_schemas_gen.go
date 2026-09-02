@@ -27963,7 +27963,7 @@ func (*SnippetsUpdateSnippetConflict) snippetsUpdateSnippetRes() {}
 type Stat struct {
 	MemoryFree float64          `json:"memoryFree"`
 	MemoryUsed float64          `json:"memoryUsed"`
-	Uptime     int              `json:"uptime"`
+	Uptime     float64          `json:"uptime"`
 	LoadAvg    []float64        `json:"loadAvg"`
 	Interface  NilInterfaceItem `json:"interface"`
 }
@@ -27979,7 +27979,7 @@ func (s *Stat) GetMemoryUsed() float64 {
 }
 
 // GetUptime returns the value of Uptime.
-func (s *Stat) GetUptime() int {
+func (s *Stat) GetUptime() float64 {
 	return s.Uptime
 }
 
@@ -28004,7 +28004,7 @@ func (s *Stat) SetMemoryUsed(val float64) {
 }
 
 // SetUptime sets the value of Uptime.
-func (s *Stat) SetUptime(val int) {
+func (s *Stat) SetUptime(val float64) {
 	s.Uptime = val
 }
 

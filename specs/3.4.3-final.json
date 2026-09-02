@@ -28563,7 +28563,7 @@
             "type": "number"
           },
           "uptime": {
-            "type": "integer"
+            "type": "number"
           },
           "loadAvg": {
             "type": "array",

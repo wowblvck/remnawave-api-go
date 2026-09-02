@@ -10540,7 +10540,7 @@ func (s *Stat) SetFake() {
 	}
 	{
 		{
-			s.Uptime = int(0)
+			s.Uptime = float64(0)
 		}
 	}
 	{

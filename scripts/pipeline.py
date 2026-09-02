@@ -689,6 +689,28 @@ def fix_system_stats_uptime(spec: dict) -> int:
     return 1
 
 
+def fix_node_stats_uptime(spec: dict) -> int:
+    """Keep the fractional uptime nested in node ``system.stats`` data.
+
+    Remnawave's ``Stat`` schema currently declares this value as an integer,
+    while the nodes endpoint returns seconds with fractional precision.  Keep
+    the correction scoped to this schema so other integral uptime fields are
+    unaffected.
+    """
+    uptime_schema = (
+        spec.get('components', {})
+        .get('schemas', {})
+        .get('Stat', {})
+        .get('properties', {})
+        .get('uptime', {})
+    )
+    if uptime_schema.get('type') != 'integer':
+        return 0
+
+    uptime_schema['type'] = 'number'
+    return 1
+
+
 def fix_opaque_cursor_params(spec: dict) -> int:
     """Encode cursor query parameters as opaque strings.
 
@@ -1419,6 +1441,12 @@ def main():
         if fractional_stats_count > 0:
             print_success(
                 f"Preserved {fractional_stats_count} fractional system stats field: uptime"
+            )
+
+        fractional_node_count = fix_node_stats_uptime(final_spec)
+        if fractional_node_count > 0:
+            print_success(
+                f"Preserved {fractional_node_count} fractional node stats field: uptime"
             )
 
         cursor_count = fix_opaque_cursor_params(final_spec)
